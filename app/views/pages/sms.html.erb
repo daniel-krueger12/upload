@@ -1,0 +1,44 @@
+<h1>Ausgabe der SMS</h1>
+<!-- neue instanz der klasse Sms.-->
+<% sms = Sms.new %>
+<!-- übergeben der werte name nummer und sms vom formular an setsms.-->
+<%sms.setsms(params[:name],params[:nummer],params[:smstext]) %>
+<!-- werte mit mittels get geholt wurden.-->
+<% smsname=sms.getsmsname %>
+<% smsnumber=sms.getsmsnumber %>
+<% smsanzahl=sms.getsmsanz %>
+
+<!-- AusgabeFormular.-->
+<%= form_tag() do %>
+    <p>Name:
+    <%= text_field_tag("Absender Name",smsname) %></p>
+    <p>Nummer:
+    <%= text_field_tag("Absender Nummer",smsnumber) %></p>
+    <p>Anzahl der SMS:
+    <%= text_field_tag("Absender Nummer",smsanzahl) %></p>
+    <% durchgang=0 %>
+    <!-- Schleige zum erstellen der Texboxen, die den getrennten smstext beinhalten.-->
+    <%  while durchgang<smsanzahl %>
+          <% smstext=sms.getsmstextarray[durchgang]%>
+          <% durchgang=durchgang+1 %>
+          <!-- abfrage zum verhindern das bei einer sms mit weniger als 160 zeichen part 1 of 1 drangehangen wird.-->
+          <% if durchgang ==1 && durchgang== smsanzahl %>
+              <% smstext=smstext%>
+          <% else %>
+              <% smstext=smstext+" Part " +durchgang.to_s+ " of "+smsanzahl.to_s %>
+          <% end %>
+          <p>SMS Text:
+          <%= text_area_tag(:message, smstext, size: "60x12" ) %>
+    <% end %>
+<% end %>
+
+
+<% #smsverschicken=SmsSend.new %>
+<% #durchgang=0 %>
+<%  #while durchgang<smsanzahl %>
+    <% #smstext=sms.getsmstextarray[durchgang]%>
+    <% #durchgang=durchgang+1 %>
+    <% #smstext=smstext+" Part " +durchgang.to_s+ " of "+smsanzahl.to_s %>
+    <% #smsverschicken.send_sms_message(smstext,smsnumber,smsname)%>
+    <% #smsverschicken.deliver_message_via_carrier(smstext,smsnumber,smsname)%>
+<% #end %>

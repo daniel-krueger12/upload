@@ -1,0 +1,30 @@
+<h1>SMS senden</h1>
+<br><br>
+
+<!-- Formular zum eingeben des names der Nummer und des SMS Textes.-->
+<%= form_tag(:action => "sms") do %>
+
+  <p>Name:
+  <%= text_field_tag("name","Daniel") %></p>
+  <p>Nummer:
+  <%= text_field_tag("nummer","1234567890") %></p>
+  <p>SMS ext:
+    <!-- ich habe den aufgabentext genommen weil mir auf die schnelle nichts besseres eingefallen ista.-->
+  <%= text_field_tag("smstext","    # SMS can only be a maximum of 160 characters.
+    # If the user wants to send a message bigger than that, we need to break it up.
+    # We want a multi-part message to have this added to each message:
+    #  - Part 1 of 2
+
+    # You need to fix this method, currently it will crash with > 160 char messages.
+  #5  def send_sms_message(text, to, from)
+      #deliver_message_via_carrier(text, to, from)
+
+
+    # This method actually sends the message via a SMS carrier
+    # This method works, you don't change it,
+  #  def deliver_message_via_carrier(text, to, from)
+    #  SMS_CARRIER.deliver_message(text, to, from)
+    ") %></p>
+
+  <%= submit_tag("Senden") %>
+<% end %>
